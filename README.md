@@ -26,7 +26,7 @@ README.md: Readme file offering detailed information about the application's str
 
 config/: Contains configuration files essential for the application's operation. database_config.yaml: Configuration file specifying database connection settings used by the application.
 
-### Build Script (build.sh)
+## Build Script (build.sh)
 Overview
 The build script build.sh automates the process of building the Docker image for the application. It extracts the Docker image name from the configuration file app_config.yaml, builds the Docker image, and moves it to the obj directory to make it available for other processes.
 
