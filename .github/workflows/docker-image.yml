@@ -45,7 +45,7 @@ jobs:
         ")
         docker build -t $DOCKER_IMAGE_NAME -f infra/docker/Dockerfile .
 
-     - name: Print Docker image name
+    - name: Print Docker image name
       run: |
         echo "DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
         
