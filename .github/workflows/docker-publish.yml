@@ -1,22 +1,23 @@
 name: Build Docker Image on Release
 
 on:
-  push:
-    branches:
-      - release/*
+  pull_request:
+    types: [closed]
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use Ubuntu as the runner environment
+    runs-on: ubuntu-latest
+
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2  # Checkout the repository's code
+      uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'  # Set up Python environment
+        python-version: '3.x'
 
     - name: Build Docker image
       run: |
@@ -39,4 +40,9 @@ jobs:
             print(f'Error: {str(e)}')
             exit(1)
         ")
-                docker build -t "$DOCKER_IMAGE_NAME" -f "infra/Docker/Dockerfile" .
+        docker build -t "$DOCKER_IMAGE_NAME" -f "infra/Docker/Dockerfile" .
+
+    - name: Move Docker image to obj directory
+      run: |
+        mkdir -p infra/obj
+        mv Docker_image_name infra/obj/
