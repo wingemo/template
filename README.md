@@ -2,7 +2,7 @@
 
 ## Directory Structure Overview
 
-###Infrastructure
+### Infrastructure
 The infra/ directory contains files related to the infrastructure setup and configuration of the application.
 
 Docker/: Contains the Dockerfile used for building Docker images of the application.
