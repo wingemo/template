@@ -47,4 +47,4 @@ jobs:
     - name: Move Docker image to obj directory
       run: |
         mkdir -p infra/obj
-        mv $DOCKER_IMAGE_NAME infra/obj/
+        mv infra/docker/$DOCKER_IMAGE_NAME infra/obj
