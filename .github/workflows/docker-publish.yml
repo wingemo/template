@@ -23,7 +23,7 @@ jobs:
         DOCKER_IMAGE_NAME=$(python -c "
         import yaml
         try:
-            with open('Infrastructure/config/app_config.yaml', 'r') as config_file:
+            with open('infra/config/app_config.yaml', 'r') as config_file:
                 config = yaml.safe_load(config_file)
                 docker_image_name = config.get('docker_image_name', 'default_image_name')
                 if not docker_image_name:
@@ -39,4 +39,4 @@ jobs:
             print(f'Error: {str(e)}')
             exit(1)
         ")
-                docker build -t "$DOCKER_IMAGE_NAME" -f "Infrastructure/Docker/Dockerfile" .
+                docker build -t "$DOCKER_IMAGE_NAME" -f "infra/Docker/Dockerfile" .
