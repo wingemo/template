@@ -13,3 +13,5 @@ deployment.yaml: Defines the deployment configuration for running the applicatio
 config/: Houses configuration files essential for the application's infrastructure. app_config.yaml: Configuration file containing settings specific to the application's infrastructure.
 
 obj/: This directory stores Docker images that are generated during the CI (Continuous Integration) process and later used in the CD (Continuous Deployment) process.
+
+### Application Components
