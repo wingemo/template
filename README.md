@@ -1,6 +1,6 @@
-# template
+# Template
 
-## Directory Structure Overview
+## Directory Structure 
 
 ### Infrastructure
 The infra/ directory contains files related to the infrastructure setup and configuration of the application.
