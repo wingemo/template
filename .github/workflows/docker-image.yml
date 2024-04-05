@@ -49,5 +49,5 @@ jobs:
         fi
         docker build -t $DOCKER_IMAGE_NAME -f infra/docker/Dockerfile .
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-        docker push docker.pkg.github.com/wingemo/template/${DOCKER_IMAGE_NAME}:latest  # Modify tag to suit your versioning strategy
-
+        docker tag $DOCKER_IMAGE_NAME docker.pkg.github.com/wingemo/template/${DOCKER_IMAGE_NAME}:latest
+        docker push docker.pkg.github.com/wingemo/template/${DOCKER_IMAGE_NAME}:latest
