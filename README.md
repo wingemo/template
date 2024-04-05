@@ -28,10 +28,8 @@ config/: Contains configuration files essential for the application's operation.
 
 ## Build Script (build.sh)
 Overview
-The build script build.sh automates the process of building the Docker image for the application. It extracts the Docker image name from the configuration file app_config.yaml, builds the Docker image, and moves it to the obj directory to make it available for other processes.
+This GitHub Actions workflow automates the process of building and publishing a Docker image to GitHub Packages. The workflow is triggered when a pull request is made to the "release" branch in your repository. Initially, the code is checked out, and the Python environment is set up. Then, the PyYAML package is installed to parse YAML files, specifically to read configuration settings from app_config.yaml.
 
-Extract Docker Image Name: The script uses Python to read the configuration file app_config.yaml, which contains information about the Docker image. It extracts the Docker image name from this file and stores it in the variable DOCKER_IMAGE_NAME.
+Once set up, the workflow reads the Docker image name from the configuration file and builds the Docker image using the specified Dockerfile. It logs into the GitHub Packages Docker registry using a personal access token and publishes the built Docker image to the registry.
 
-Build Docker Image: The script uses the Docker command docker build to build a Docker image. It uses the Dockerfile located in the Infrastructure/Docker/ directory and tags the built image with the extracted Docker image name.
-
-Move Docker Image to Obj Directory: After the Docker image is built, the script uses the Docker command docker image tag to move the built image to the Infrastructure/obj/ directory. This way, the script makes the built Docker image available for other processes that may use it for continuous deployment or other purposes
+This workflow expects a Dockerfile in your project structure as well as a configuration file specifying settings for the Docker image. By integrating this workflow into your project, you can automate the build and publish process of your Docker image each time a change is made in the "release" branch.
