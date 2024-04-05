@@ -42,7 +42,7 @@ jobs:
             print(f'Error: {str(e)}')
             exit(1)
         ")
-        docker build -t "$DOCKER_IMAGE_NAME" -f "infra/Docker/Dockerfile" .
+        docker build -t "$DOCKER_IMAGE_NAME" -f "infra/docker/Dockerfile" .
 
     - name: Move Docker image to obj directory
       run: |
