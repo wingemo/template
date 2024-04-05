@@ -1,36 +1,33 @@
-name: Docker Build
+name: Build Docker Image on Release
 
 on:
-  pull_request:
+  push:
     branches:
-      - release  # Justera grenens namn om det behövs
+      - release/*
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use Ubuntu as the runner environment
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2  # Checkout the repository's code
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
-
-    - name: Install dependencies
-      run: pip install pyyaml
+        python-version: '3.x'  # Set up Python environment
 
     - name: Build Docker image
       run: |
-        DOCKER_IMAGE_NAME=$(python - <<END
+        DOCKER_IMAGE_NAME=$(python -c "
         import yaml
         try:
-            with open('$APP_CONFIG', 'r') as config_file:
+            with open('Infrastructure/config/app_config.yaml', 'r') as config_file:
                 config = yaml.safe_load(config_file)
                 docker_image_name = config.get('docker_image_name', 'default_image_name')
                 if not docker_image_name:
-                    raise ValueError("Docker image name is not defined in app_config.yaml")
+                    raise ValueError('Docker image name is not defined in app_config.yaml')
                 print(docker_image_name)
         except FileNotFoundError:
             print('Error: app_config.yaml not found.')
@@ -39,29 +36,7 @@ jobs:
             print('Error: Invalid YAML format in app_config.yaml.')
             exit(1)
         except ValueError as e:
-            print(f"Error: {str(e)}")
+            print(f'Error: {str(e)}')
             exit(1)
-        END
-        )
-        docker build -t "$DOCKER_IMAGE_NAME" -f "$DOCKERFILE_PATH" .
-        
-    - name: Check Docker build
-      run: |
-        if [ $? -ne 0 ]; then
-            echo "Error: Failed to build Docker image."
-            exit 1
-        fi
-
-    - name: Move Docker image to obj directory
-      run: |
-        docker image tag "$DOCKER_IMAGE_NAME" "$OBJ_DIRECTORY/$DOCKER_IMAGE_NAME"
-        
-    - name: Check Docker move
-      run: |
-        if [ $? -ne 0 ]; then
-            echo "Error: Failed to tag and move Docker image to obj directory."
-            exit 1
-        fi
-
-    - name: Docker image build and move completed successfully
-      run: echo "Docker image build and move completed successfully."
+        ")
+                docker build -t "$DOCKER_IMAGE_NAME" -f "Infrastructure/Docker/Dockerfile" .
