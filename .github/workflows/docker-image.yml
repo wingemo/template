@@ -50,4 +50,4 @@ jobs:
 
     - name: Push Docker image to GitHub Packages
       run: |
-        docker push docker.pkg.github.com/${{ github.repository }}/$DOCKER_IMAGE_NAME:${{ github.run_number }}
+        docker push docker.pkg.github.com/wingemo/template/${DOCKER_IMAGE_NAME}:1
